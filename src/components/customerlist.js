@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
+import "./CustomerList.css"
+
 export default function Customerlist() {
   const [customers, setCustomers] = useState([]);
 
@@ -18,31 +20,31 @@ export default function Customerlist() {
   };
   const columns = [
     {
-      Header: "firstname",
+      Header: "First Name",
       accessor: "firstname",
     },
     {
-      Header: "lastname",
+      Header: "Last Name",
       accessor: "lastname",
     },
     {
-      Header: "streetaddress",
+      Header: "Street Address",
       accessor: "streetaddress",
     },
     {
-      Header: "postcode",
+      Header: "Post Code",
       accessor: "postcode",
     },
     {
-      Header: "city",
+      Header: "City",
       accessor: "city",
     },
     {
-      Header: "email",
+      Header: "Email",
       accessor: "email",
     },
     {
-      Header: "phone",
+      Header: "Phone",
       accessor: "phone",
     },
     {
@@ -55,7 +57,7 @@ export default function Customerlist() {
 
   return (
     <div>
-      <ReactTable
+      <ReactTable id='customer-list-table'
         filterable={true}
         data={customers}
         columns={columns}
