@@ -48,15 +48,7 @@ export default function Customerlist() {
       .then((res) => fetchData())
       .catch((err) => console.error(err));
   };
-  const addTraining = (customer, link) => {
-    fetch(link, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(training),
-    });
-  };
+
   const columns = [
     {
       Header: "First Name",
