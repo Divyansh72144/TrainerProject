@@ -4,26 +4,49 @@ import "react-table/react-table.css";
 import "./CustomerList.css";
 import Addcustomer from "./AddCustomer";
 import EditCustomer from "./EditCustomer";
+import AddTraining from "./AddTraining";
+import { CSVLink } from "react-csv";
 
 export default function Customerlist() {
   const [customers, setCustomers] = useState([]);
+  const [csvData, setCSVData] = useState([]);
 
   useEffect(() => fetchData(), []);
 
   const fetchData = () => {
     fetch("http://traineeapp.azurewebsites.net/api/customers")
       .then((response) => response.json())
-      .then((data) => setCustomers(data.content));
+      .then((data) => {
+        setCustomers(data.content);
+        const csvData = data?.content.map((obj) => {
+          const newObj = {
+            firstname: obj.firstname,
+            lastname: obj.lastname,
+            streetaddress: obj.streetaddress,
+            postcode: obj.postcode,
+            city: obj.city,
+            email: obj.email,
+            phone: obj.phone,
+          };
+          return newObj;
+        });
+        setCSVData(csvData);
+      });
   };
   const deleteCustomer = (link) => {
     console.log(link);
     const id = link.href.split("/")[5];
-    console.log(id);
-    fetch(`http://traineeapp.azurewebsites.net/api/customers/${id}`, {
-      method: "DELETE",
-    })
-      .then((res) => fetchData())
-      .catch((err) => console.error());
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this customer?"
+    );
+
+    if (confirmDelete) {
+      fetch(`http://traineeapp.azurewebsites.net/api/customers/${id}`, {
+        method: "DELETE",
+      })
+        .then((res) => fetchData())
+        .catch((err) => console.error());
+    }
   };
 
   const saveCustomer = (customer) => {
@@ -44,6 +67,18 @@ export default function Customerlist() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(customer),
+    })
+      .then((res) => fetchData())
+      .catch((err) => console.error(err));
+  };
+
+  const saveTraining = (training, customer) => {
+    fetch("http://traineeapp.azurewebsites.net/api/customers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(training),
     })
       .then((res) => fetchData())
       .catch((err) => console.error(err));
@@ -94,11 +129,20 @@ export default function Customerlist() {
         </button>
       ),
     },
+    {
+      filterable: false,
+      sortable: false,
+      width: 100,
+      Cell: (row) => (
+        <AddTraining saveTraining={saveTraining} customer={row.original} />
+      ),
+    },
   ];
 
   return (
     <div>
       <Addcustomer saveCustomer={saveCustomer} />
+      <CSVLink data={csvData}>Export CSV</CSVLink>
       <ReactTable
         id="customer-list-table"
         filterable={true}

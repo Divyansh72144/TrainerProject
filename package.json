@@ -15,7 +15,9 @@
     "ag-grid-community": "^29.3.2",
     "ag-grid-react": "^29.3.2",
     "react": "^18.2.0",
+    "react-csv": "^2.2.2",
     "react-dom": "^18.2.0",
+    "react-export-csv": "^0.0.4",
     "react-scripts": "5.0.1",
     "react-table": "^6.10.3",
     "web-vitals": "^2.1.4"
