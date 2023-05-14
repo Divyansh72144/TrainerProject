@@ -14,7 +14,7 @@ export default function Customerlist() {
   useEffect(() => fetchData(), []);
 
   const fetchData = () => {
-    fetch("http://traineeapp.azurewebsites.net/api/customers")
+    fetch("https://traineeapp.azurewebsites.net/api/customers")
       .then((response) => response.json())
       .then((data) => {
         setCustomers(data.content);
@@ -41,7 +41,7 @@ export default function Customerlist() {
     );
 
     if (confirmDelete) {
-      fetch(`http://traineeapp.azurewebsites.net/api/customers/${id}`, {
+      fetch(`https://traineeapp.azurewebsites.net/api/customers/${id}`, {
         method: "DELETE",
       })
         .then((res) => fetchData())
@@ -50,7 +50,7 @@ export default function Customerlist() {
   };
 
   const saveCustomer = (customer) => {
-    fetch("http://traineeapp.azurewebsites.net/api/customers", {
+    fetch("https://traineeapp.azurewebsites.net/api/customers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export default function Customerlist() {
   };
 
   const saveTraining = (training, customer) => {
-    fetch("http://traineeapp.azurewebsites.net/api/customers", {
+    fetch("https://traineeapp.azurewebsites.net/api/customers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

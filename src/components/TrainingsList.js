@@ -21,7 +21,7 @@ export default function TrainingsList() {
     );
 
     if (confirmDelete) {
-      fetch(`http://traineeapp.azurewebsites.net/api/trainings/${id}`, {
+      fetch(`https://traineeapp.azurewebsites.net/api/trainings/${id}`, {
         method: "DELETE",
       })
         .then((res) => fetchData())
